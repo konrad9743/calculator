@@ -1,0 +1,55 @@
+.row1,
+.row2,
+.row3,
+.row4,
+.row5 {
+    display: flex;
+    gap: 5px;
+    flex:1;
+}
+
+
+
+.calculator {
+    display: flex;
+    flex-direction: column;
+    background-color: black;
+    padding: 12px;
+    width: 500px;
+    height: 600px;
+    gap: 5px;
+}
+
+.display {
+    background-color: grey;
+    flex:1;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    font-size: 80px;
+    padding-right: 10px;
+}
+
+
+button {
+    flex: 1;
+    font-size: xx-large;
+    border-radius: 5px;
+    border-style: hidden;
+}
+
+.blue-button {
+    background-color: blue;
+}
+
+.orange-button {
+    background-color: orange;
+}
+
+.green-button {
+    background-color: green;
+}
+
+.long-button {
+    flex: 2.15;
+}
