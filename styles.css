@@ -20,7 +20,7 @@
     gap: 5px;
 }
 
-.display {
+#display {
     background-color: grey;
     flex:1;
     display: flex;
