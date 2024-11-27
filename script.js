@@ -17,7 +17,6 @@ for (let button of greenButtons) {
         button.style.backgroundColor = "lightgreen"
     })
 }
-
 for (let button of blueButtons) {
     button.addEventListener("mouseup", () => {
         button.style.backgroundColor = "blue"
@@ -33,6 +32,7 @@ for (let button of greenButtons) {
         button.style.backgroundColor = "green"
     })
 }
+
 let display = document.getElementById("display");
 
 let zeroButton = document.getElementById("zero")
@@ -47,6 +47,7 @@ let eightButton = document.getElementById("eight")
 let nineButton = document.getElementById("nine")
 
 zeroButton.addEventListener("click", () => {
+    if (display.textContent > 100000000) {return;}
     let value = 0;
     if (isOperandActive === true) {
         display.textContent = value
@@ -58,6 +59,7 @@ zeroButton.addEventListener("click", () => {
     }
 })
 oneButton.addEventListener("click", () => {
+    if (display.textContent > 100000000) {return;}
     let value = 1;
     
     if (isOperandActive === true) {
@@ -70,6 +72,7 @@ oneButton.addEventListener("click", () => {
     }
 })
 twoButton.addEventListener("click", () => {
+    if (display.textContent > 100000000) {return;}
     let value = 2;
     if (isOperandActive === true) {
         display.textContent = value
@@ -81,6 +84,7 @@ twoButton.addEventListener("click", () => {
     } 
 })
 threeButton.addEventListener("click", () => {
+    if (display.textContent > 100000000) {return;}
     let value = 3;
     if (isOperandActive === true) {
         display.textContent = value
@@ -92,6 +96,7 @@ threeButton.addEventListener("click", () => {
     }
 })
 fourButton.addEventListener("click", () => {
+    if (display.textContent > 100000000) {return;}
     let value = 4;
     if (isOperandActive === true) {
         display.textContent = value
@@ -103,6 +108,7 @@ fourButton.addEventListener("click", () => {
     }
 })
 fiveButton.addEventListener("click", () => {
+    if (display.textContent > 100000000) {return;}
     let value = 5;
     if (isOperandActive === true) {
         display.textContent = value
@@ -114,6 +120,7 @@ fiveButton.addEventListener("click", () => {
     }
 })
 sixButton.addEventListener("click", () => {
+    if (display.textContent > 100000000) {return;}
     let value = 6;
     if (isOperandActive === true) {
         display.textContent = value
@@ -125,6 +132,7 @@ sixButton.addEventListener("click", () => {
     }
 })
 sevenButton.addEventListener("click", () => {
+    if (display.textContent > 100000000) {return;}
     let value = 7;
     if (isOperandActive === true) {
         display.textContent = value
@@ -136,6 +144,7 @@ sevenButton.addEventListener("click", () => {
     }
 })
 eightButton.addEventListener("click", () => {
+    if (display.textContent > 100000000) {return;}
     let value = 8;
     if (isOperandActive === true) {
         display.textContent = value
@@ -147,6 +156,7 @@ eightButton.addEventListener("click", () => {
     }
 })
 nineButton.addEventListener("click", () => {
+    if (display.textContent > 100000000) {return;}
     let value = 9;
     if (isOperandActive === true) {
         display.textContent = value
@@ -172,7 +182,7 @@ let firstNumber = false;
 let secondNumber = false;
 let isOperandActive = false;
 let operand = ''
-let operandSecondTime = 0;
+let operandSecondTime = 1;
 
 resetButton.addEventListener("click", () => {
     display.textContent = 0;
@@ -194,9 +204,9 @@ let operate = (secondNumber, firstNumber, operand) => {
   firstNumber = Number(firstNumber);
   secondNumber = Number(secondNumber);
   switch (operand) {
-    case '+': return firstNumber + secondNumber;
-    case '-': return firstNumber - secondNumber;
-    case '*': return roundNumber(firstNumber * secondNumber);
+    case '+': return (firstNumber + secondNumber) % 1000000000;
+    case '-': return (firstNumber - secondNumber) % 1000000000;
+    case '*': return roundNumber(firstNumber * secondNumber) % 1000000000;
     case '/': 
         if (secondNumber === 0) { return "GET REKT"}
         else {
@@ -214,15 +224,17 @@ equalsButton.addEventListener("click",() => {
 })
 
 plusButton.addEventListener("click", () => {
-    if (operandSecondTime > 1) {
-        display.textContent = operate(firstNumber, secondNumber, operand)
-    }
-    else {operandSecondTime += 1}
-
+    operand = "+"
     secondNumber = firstNumber
     firstNumber = display.textContent;
-    operand = "+"
-    display.textContent = firstNumber;
+    if (operandSecondTime > 1) {
+        display.textContent = operate(firstNumber, secondNumber, operand)
+        secondNumber = firstNumber
+        firstNumber = display.textContent;
+    }
+    else {
+        operandSecondTime += 1
+    }
     isOperandActive = true;
 })
 
@@ -230,15 +242,30 @@ minusButton.addEventListener("click", () => {
     secondNumber = firstNumber
     firstNumber = display.textContent;
     operand = "-"
-    display.textContent = firstNumber;
+        if (operandSecondTime > 1) {
+        display.textContent = operate(firstNumber, secondNumber, operand)
+        secondNumber = firstNumber
+        firstNumber = display.textContent;
+    }
+    else {
+        operandSecondTime += 1
+    }
     isOperandActive = true;
+
 })
 
 divisionButton.addEventListener("click", () => {
     secondNumber = firstNumber
     firstNumber = display.textContent;
     operand = "/"
-    display.textContent = firstNumber;
+        if (operandSecondTime > 1) {
+        display.textContent = operate(firstNumber, secondNumber, operand)
+        secondNumber = firstNumber
+        firstNumber = display.textContent;
+    }
+    else {
+        operandSecondTime += 1
+    }
     isOperandActive = true;
 })
 
@@ -246,7 +273,14 @@ multiplyButton.addEventListener("click" , () => {
     secondNumber = firstNumber
     firstNumber = display.textContent;
     operand = "*"
-    display.textContent = firstNumber;
+        if (operandSecondTime > 1) {
+        display.textContent = operate(firstNumber, secondNumber, operand)
+        secondNumber = firstNumber
+        firstNumber = display.textContent;
+    }
+    else {
+        operandSecondTime += 1
+    }
     isOperandActive = true;
 })
 
@@ -262,9 +296,3 @@ dotButton.addEventListener("click", () => {
     if (!display.textContent.includes(".")) {display.textContent += "."}
 })
 
-
-/* 
-TODO: 
-3. Add automatic calculations after pressing operand for the second time -> doesnt work currently
-4. keyboard support ??
-*/
