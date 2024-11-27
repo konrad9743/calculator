@@ -2,19 +2,35 @@ let blueButtons = document.getElementsByClassName("blue-button");
 let orangeButtons = document.getElementsByClassName("orange-button");
 let greenButtons = document.getElementsByClassName("green-button")
 
-for (button of blueButtons) {
-    button.addEventListener("click", () => {
+for (let button of blueButtons) {
+    button.addEventListener("mousedown", () => {
         button.style.backgroundColor = "lightblue"
     })
 }
-for (button of orangeButtons) {
-    button.addEventListener("click", () => {
+for (let button of orangeButtons) {
+    button.addEventListener("mousedown", () => {
         button.style.backgroundColor = "red"
     })
 }
-for (button of greenButtons) {
-    button.addEventListener("click", () => {
+for (let button of greenButtons) {
+    button.addEventListener("mousedown", () => {
         button.style.backgroundColor = "lightgreen"
+    })
+}
+
+for (let button of blueButtons) {
+    button.addEventListener("mouseup", () => {
+        button.style.backgroundColor = "blue"
+    })
+}
+for (let button of orangeButtons) {
+    button.addEventListener("mouseup", () => {
+        button.style.backgroundColor = "orange"
+    })
+}
+for (let button of greenButtons) {
+    button.addEventListener("mouseup", () => {
+        button.style.backgroundColor = "green"
     })
 }
 let display = document.getElementById("display");
@@ -81,21 +97,78 @@ let plusButton = document.getElementById("plus")
 let dotButton = document.getElementById("dot")
 let equalsButton = document.getElementById("equals")
 
-isPrevious = false;
-previousNumber = 0;
-previousOperand = '';
+let firstNumber = false;
+let secondNumber = false;
+let operand = ''
 
 resetButton.addEventListener("click", () => {
     display.textContent = 0;
-})
-plusButton.addEventListener("click", () => {
-    if (isPrevious) {
-        display.textContent = previousNumber + Number(display.textContent)
-    }
-    else {
-        isPrevious = true;
-        previousNumber = Number(display.textContent);
-        display.textContent = 0;
-    }
+    firstNumber = false;
+    secondNumber = false;
 })
 
+let operate = (secondNumber, firstNumber, operand) => {
+  firstNumber = Number(firstNumber);
+  secondNumber = Number(secondNumber);
+  switch (operand) {
+    case '+': return firstNumber + secondNumber;
+    case '-': return firstNumber - secondNumber;
+    case '*': return firstNumber * secondNumber;
+    case '/': 
+        if (secondNumber == 0) {return "get rekt"}
+        else {return firstNumber / secondNumber}
+  }
+    
+}
+
+equalsButton.addEventListener("click",() => {
+    secondNumber = firstNumber
+    firstNumber = display.textContent;
+    console.log(firstNumber, secondNumber, operand)
+    if (firstNumber == false) {}
+    else if (secondNumber == false) {display.textContent = firstNumber}
+    else {display.textContent = operate(firstNumber, secondNumber, operand)}
+})
+
+plusButton.addEventListener("click", () => {
+    secondNumber = firstNumber
+    firstNumber = display.textContent;
+    operand = "+"
+    display.textContent = 0;
+})
+
+minusButton.addEventListener("click", () => {
+    secondNumber = firstNumber
+    firstNumber = display.textContent;
+    operand = "-"
+    display.textContent = 0;
+})
+
+divisionButton.addEventListener("click", () => {
+    secondNumber = firstNumber
+    firstNumber = display.textContent;
+    operand = "/"
+    display.textContent = 0;
+})
+
+multiplyButton.addEventListener("click" , () => {
+    secondNumber = firstNumber
+    firstNumber = display.textContent;
+    operand = "*"
+    display.textContent = 0;
+})
+
+plusMinusButton.addEventListener("click", () => {
+    display.textContent = -1 * Number(display.textContent);
+})
+
+
+// for 7 it doesnt work properly
+percentButton.addEventListener("click", () => {
+    display.textContent = Number(display.textContent) / 100
+})
+
+// adds dot, but when adding number after dot the dot is deleted.
+dotButton.addEventListener("click", () => {
+    if (!display.textContent.includes(".")) {display.textContent += "."}
+})
