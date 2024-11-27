@@ -48,43 +48,114 @@ let nineButton = document.getElementById("nine")
 
 zeroButton.addEventListener("click", () => {
     let value = 0;
-    display.textContent = Number(display.textContent) * 10 + value;
+    if (isOperandActive === true) {
+        display.textContent = value
+        isOperandActive = false
+    }
+    else {
+        if (display.textContent.includes(".")) {display.textContent += value}
+        else {display.textContent = Number(display.textContent) * 10 + value}; 
+    }
 })
 oneButton.addEventListener("click", () => {
     let value = 1;
-    display.textContent = Number(display.textContent) * 10 + value;
+    
+    if (isOperandActive === true) {
+        display.textContent = value
+        isOperandActive = false
+    }
+    else {
+        if (display.textContent.includes(".")) {display.textContent += value}
+        else {display.textContent = Number(display.textContent) * 10 + value}; 
+    }
 })
 twoButton.addEventListener("click", () => {
     let value = 2;
-    display.textContent = Number(display.textContent) * 10 + value; 
+    if (isOperandActive === true) {
+        display.textContent = value
+        isOperandActive = false
+    }
+    else {
+        if (display.textContent.includes(".")) {display.textContent += value}
+        else {display.textContent = Number(display.textContent) * 10 + value}; 
+    } 
 })
 threeButton.addEventListener("click", () => {
     let value = 3;
-    display.textContent = Number(display.textContent) * 10 + value;
+    if (isOperandActive === true) {
+        display.textContent = value
+        isOperandActive = false
+    }
+    else {
+        if (display.textContent.includes(".")) {display.textContent += value}
+        else {display.textContent = Number(display.textContent) * 10 + value}; 
+    }
 })
 fourButton.addEventListener("click", () => {
     let value = 4;
-    display.textContent = Number(display.textContent) * 10 + value;
+    if (isOperandActive === true) {
+        display.textContent = value
+        isOperandActive = false
+    }
+    else {
+        if (display.textContent.includes(".")) {display.textContent += value}
+        else {display.textContent = Number(display.textContent) * 10 + value}; 
+    }
 })
 fiveButton.addEventListener("click", () => {
     let value = 5;
-    display.textContent = Number(display.textContent) * 10 + value;
+    if (isOperandActive === true) {
+        display.textContent = value
+        isOperandActive = false
+    }
+    else {
+        if (display.textContent.includes(".")) {display.textContent += value}
+        else {display.textContent = Number(display.textContent) * 10 + value}; 
+    }
 })
 sixButton.addEventListener("click", () => {
     let value = 6;
-    display.textContent = Number(display.textContent) * 10 + value;
+    if (isOperandActive === true) {
+        display.textContent = value
+        isOperandActive = false
+    }
+    else {
+        if (display.textContent.includes(".")) {display.textContent += value}
+        else {display.textContent = Number(display.textContent) * 10 + value}; 
+    }
 })
 sevenButton.addEventListener("click", () => {
     let value = 7;
-    display.textContent = Number(display.textContent) * 10 + value;
+    if (isOperandActive === true) {
+        display.textContent = value
+        isOperandActive = false
+    }
+    else {
+        if (display.textContent.includes(".")) {display.textContent += value}
+        else {display.textContent = Number(display.textContent) * 10 + value}; 
+    }
 })
 eightButton.addEventListener("click", () => {
     let value = 8;
-    display.textContent = Number(display.textContent) * 10 + value;
+    if (isOperandActive === true) {
+        display.textContent = value
+        isOperandActive = false
+    }
+    else {
+        if (display.textContent.includes(".")) {display.textContent += value}
+        else {display.textContent = Number(display.textContent) * 10 + value}; 
+    }
 })
 nineButton.addEventListener("click", () => {
     let value = 9;
-    display.textContent = Number(display.textContent) * 10 + value;
+    if (isOperandActive === true) {
+        display.textContent = value
+        isOperandActive = false
+    }
+    else {
+        if (display.textContent.includes(".")) {display.textContent += value}
+        else {display.textContent = Number(display.textContent) * 10 + value}; 
+    }
 })
 
 let resetButton = document.getElementById("reset")
@@ -99,7 +170,9 @@ let equalsButton = document.getElementById("equals")
 
 let firstNumber = false;
 let secondNumber = false;
+let isOperandActive = false;
 let operand = ''
+let operandSecondTime = 0;
 
 resetButton.addEventListener("click", () => {
     display.textContent = 0;
@@ -107,68 +180,91 @@ resetButton.addEventListener("click", () => {
     secondNumber = false;
 })
 
+let roundNumber = (numb) => {
+    if (Number.isInteger(numb)) {
+        return numb;
+     } else {
+        let lengthNumb = numb.toString().split('.')[1].length;
+        if (lengthNumb > 5) {return numb.toFixed(5)}
+        else {return numb.toFixed(lengthNumb)}
+     }
+}
+
 let operate = (secondNumber, firstNumber, operand) => {
   firstNumber = Number(firstNumber);
   secondNumber = Number(secondNumber);
   switch (operand) {
     case '+': return firstNumber + secondNumber;
     case '-': return firstNumber - secondNumber;
-    case '*': return firstNumber * secondNumber;
+    case '*': return roundNumber(firstNumber * secondNumber);
     case '/': 
-        if (secondNumber == 0) {return "get rekt"}
-        else {return firstNumber / secondNumber}
+        if (secondNumber === 0) { return "GET REKT"}
+        else {
+             return roundNumber(firstNumber / secondNumber)}
   }
-    
 }
 
 equalsButton.addEventListener("click",() => {
     secondNumber = firstNumber
     firstNumber = display.textContent;
-    console.log(firstNumber, secondNumber, operand)
-    if (firstNumber == false) {}
-    else if (secondNumber == false) {display.textContent = firstNumber}
+    if (firstNumber === false) {}
+    else if (secondNumber === false) {display.textContent = firstNumber}
     else {display.textContent = operate(firstNumber, secondNumber, operand)}
+    operandSecondTime = 0;
 })
 
 plusButton.addEventListener("click", () => {
+    if (operandSecondTime > 1) {
+        display.textContent = operate(firstNumber, secondNumber, operand)
+    }
+    else {operandSecondTime += 1}
+
     secondNumber = firstNumber
     firstNumber = display.textContent;
     operand = "+"
-    display.textContent = 0;
+    display.textContent = firstNumber;
+    isOperandActive = true;
 })
 
 minusButton.addEventListener("click", () => {
     secondNumber = firstNumber
     firstNumber = display.textContent;
     operand = "-"
-    display.textContent = 0;
+    display.textContent = firstNumber;
+    isOperandActive = true;
 })
 
 divisionButton.addEventListener("click", () => {
     secondNumber = firstNumber
     firstNumber = display.textContent;
     operand = "/"
-    display.textContent = 0;
+    display.textContent = firstNumber;
+    isOperandActive = true;
 })
 
 multiplyButton.addEventListener("click" , () => {
     secondNumber = firstNumber
     firstNumber = display.textContent;
     operand = "*"
-    display.textContent = 0;
+    display.textContent = firstNumber;
+    isOperandActive = true;
 })
 
 plusMinusButton.addEventListener("click", () => {
     display.textContent = -1 * Number(display.textContent);
 })
 
-
-// for 7 it doesnt work properly
 percentButton.addEventListener("click", () => {
     display.textContent = Number(display.textContent) / 100
 })
 
-// adds dot, but when adding number after dot the dot is deleted.
 dotButton.addEventListener("click", () => {
     if (!display.textContent.includes(".")) {display.textContent += "."}
 })
+
+
+/* 
+TODO: 
+3. Add automatic calculations after pressing operand for the second time -> doesnt work currently
+4. keyboard support ??
+*/

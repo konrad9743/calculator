@@ -8,15 +8,19 @@
     flex:1;
 }
 
-
+body {
+    display: flex;
+    justify-content: center;
+}
 
 .calculator {
+    margin-top: 20px;
     display: flex;
     flex-direction: column;
     background-color: black;
     padding: 12px;
-    width: 500px;
-    height: 600px;
+    width: 400px;
+    height: 500px;
     gap: 5px;
 }
 
